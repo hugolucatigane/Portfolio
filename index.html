@@ -126,6 +126,42 @@
     header h1 { font-size: 3rem; margin-bottom: 10px; text-align: center; }
     header p { color: var(--muted); max-width: 600px; text-align: center; margin-bottom: 15px; }
 
+    .header-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .cv-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 42px;
+        padding: 10px 18px;
+        border: 1px solid rgba(78, 140, 255, 0.8);
+        border-radius: 8px;
+        background: rgba(78, 140, 255, 0.12);
+        color: var(--text);
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .cv-button:hover,
+    .cv-button:focus-visible {
+        background: var(--accent);
+        transform: translateY(-2px);
+        outline: none;
+    }
+
+    .cv-button svg {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+    }
+
     .projects {
         display: flex;
         flex-wrap: wrap;
@@ -134,11 +170,14 @@
     }
 
     .card {
+        display: block;
         background: #1b1b1b;
         padding: 20px;
         border-radius: 15px;
         width: 250px;
         border: 1px solid #2a2a2a;
+        color: inherit;
+        text-decoration: none;
         text-align: center;
         transition: 0.25s;
         cursor: pointer;
@@ -194,6 +233,221 @@
         opacity: 1;
     }
 
+    .cv-print {
+        display: none;
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        html,
+        body {
+            width: 210mm;
+            height: 297mm;
+            min-height: 0;
+            margin: 0;
+            padding: 0;
+            display: block;
+            background: #ffffff !important;
+            color: #161b22;
+        }
+
+        body > :not(.cv-print) {
+            display: none !important;
+        }
+
+        .cv-print {
+            display: block !important;
+            width: 210mm;
+            height: 297mm;
+            overflow: hidden;
+            background: #f5f7fb;
+            color: #161b22;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .cv-page {
+            width: 100%;
+            height: 100%;
+            padding: 14mm;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 64mm;
+            grid-template-rows: auto 1fr;
+            column-gap: 10mm;
+            row-gap: 8mm;
+            background: linear-gradient(90deg, #fbfcff 0%, #fbfcff 70%, #eef4ff 70%, #eef4ff 100%);
+            font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        }
+
+        .cv-head {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 8mm;
+            padding-bottom: 6mm;
+            border-bottom: 1px solid #d9e2f2;
+        }
+
+        .cv-name {
+            margin: 0;
+            color: #10233f;
+            font-size: 28pt;
+            line-height: 1;
+            font-weight: 850;
+        }
+
+        .cv-role {
+            margin-top: 2.5mm;
+            color: #2f65bf;
+            font-size: 10.8pt;
+            font-weight: 800;
+        }
+
+        .cv-summary {
+            max-width: 124mm;
+            margin-top: 3.5mm;
+            color: #35445a;
+            font-size: 8.7pt;
+            line-height: 1.45;
+        }
+
+        .cv-contact {
+            display: grid;
+            gap: 1.5mm;
+            justify-items: end;
+            align-self: start;
+            color: #31445f;
+            font-size: 8pt;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .cv-main,
+        .cv-sidebar {
+            min-width: 0;
+        }
+
+        .cv-section {
+            margin-bottom: 5mm;
+            break-inside: avoid;
+        }
+
+        .cv-section h2 {
+            margin: 0 0 2.6mm;
+            color: #2f65bf;
+            font-size: 8.5pt;
+            line-height: 1.2;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .cv-item {
+            margin-bottom: 4.4mm;
+            break-inside: avoid;
+        }
+
+        .cv-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cv-item-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 5mm;
+            align-items: baseline;
+        }
+
+        .cv-item-title {
+            color: #152238;
+            font-size: 10.2pt;
+            line-height: 1.2;
+            font-weight: 850;
+        }
+
+        .cv-item-time {
+            flex: 0 0 auto;
+            color: #5b6d86;
+            font-size: 7.6pt;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        .cv-item-subtitle {
+            margin-top: 0.8mm;
+            color: #40516a;
+            font-size: 8.3pt;
+            line-height: 1.25;
+            font-weight: 750;
+        }
+
+        .cv-item-text {
+            margin-top: 1.3mm;
+            color: #35445a;
+            font-size: 8.1pt;
+            line-height: 1.38;
+        }
+
+        .cv-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 5mm;
+            padding: 5mm;
+            border-left: 3px solid #4e8cff;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.64);
+        }
+
+        .cv-sidebar .cv-section {
+            margin-bottom: 0;
+        }
+
+        .cv-list {
+            display: grid;
+            gap: 1.5mm;
+            list-style: none;
+        }
+
+        .cv-list li {
+            position: relative;
+            padding-left: 3.8mm;
+            color: #304158;
+            font-size: 8.1pt;
+            line-height: 1.32;
+        }
+
+        .cv-list li::before {
+            content: "";
+            position: absolute;
+            top: 2.4mm;
+            left: 0;
+            width: 1.5mm;
+            height: 1.5mm;
+            border-radius: 50%;
+            background: #4e8cff;
+        }
+
+        .cv-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.6mm;
+            list-style: none;
+        }
+
+        .cv-chip-list li {
+            padding: 1.4mm 2.2mm;
+            border-radius: 5px;
+            background: #dfe9fb;
+            color: #1d3558;
+            font-size: 7.7pt;
+            line-height: 1.1;
+            font-weight: 750;
+        }
+    }
+
     @media screen and (max-width: 840px) {
         .timeline-entry {
             width: 100%;
@@ -247,7 +501,17 @@
 
 <header>
     <h1 id="title">Hugo Luca Tigane</h1>
-    <p id="tagline">Student at Tallin University.</p>
+    <p id="tagline">Student at Tallinn University.</p>
+    <div class="header-actions">
+        <button class="cv-button" id="cv_button_action" type="button" onclick="downloadCv()" aria-label="Create PDF CV">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v12"></path>
+                <path d="m7 10 5 5 5-5"></path>
+                <path d="M5 21h14"></path>
+            </svg>
+            <span id="cv_button">PDF CV</span>
+        </button>
+    </div>
 </header>
 
 <div class="timeline">
@@ -268,23 +532,32 @@
             <p id="place3_text"></p>
             <span id="place3_time"></span>
         </div>
+        <div class="timeline-entry right">
+            <h3 id="place4_title"></h3>
+            <p id="place4_text"></p>
+            <span id="place4_time"></span>
+        </div>
     </div>
 </div>
 
-<h2 style="text-align:center; margin-bottom:20px;" id="proj">Projects & Github</h2>
+<h2 style="text-align:center; margin-bottom:20px;" id="proj">Projects & GitHub</h2>
 <div class="projects">
-    <div class="card" onclick="window.open('https://kino-yles-theta.vercel.app/home','_blank')">
-        <h3 id="proj1_title">Cinema application</h3>
-        <p id="proj1_desc">An application that shows movies currently shown in Estonian cinemas</p>
-    </div>
-    <div class="card" onclick="window.open('https://dlg.tlu.ee/mitigate/','_blank')">
+    <a class="card" href="https://kino-yles-theta.vercel.app/home" target="_blank" rel="noopener noreferrer">
+        <h3 id="proj1_title">Cinema Application</h3>
+        <p id="proj1_desc">An application that displays movies currently showing in Estonian cinemas. I was the backend developer.</p>
+    </a>
+    <a class="card" href="https://dlg.tlu.ee/mitigate/" target="_blank" rel="noopener noreferrer">
         <h3 id="proj2_title">Mitigate Online</h3>
-        <p id="proj2_desc">A serious game with the main purpose of developing students decision making skills.</p>
-    </div>
-    <div class="card" onclick="window.open('https://github.com/HugoLucaT','_blank')">
-        <h3 id="proj3_title">Github</h3>
-        <p id="proj3_desc">My github, where you can see my other, smaller public projects.</p>
-    </div>
+        <p id="proj2_desc">A serious game with the main purpose of developing students' decision-making skills. I was the project lead.</p>
+    </a>
+    <a class="card" href="https://pilditugi.ee/login" target="_blank" rel="noopener noreferrer">
+        <h3 id="proj3_title">Pilditugi</h3>
+        <p id="proj3_desc">I was the backend developer.</p>
+    </a>
+    <a class="card" href="https://github.com/HugoLucaT" target="_blank" rel="noopener noreferrer">
+        <h3 id="uni_github_title">GitHub</h3>
+        <p id="uni_github_desc">My GitHub profile, where you can find my other smaller public projects.</p>
+    </a>
 </div>
 
 <div class="bottom">
@@ -296,14 +569,59 @@
         <span id="tooltip">Copied!</span>
     </div>
     
-    <p>2025 - Hugo Luca Tigane</p>
+    <p>2026 - Hugo Luca Tigane</p>
 </div>
 
+<section class="cv-print" id="cv-print" aria-hidden="true">
+    <article class="cv-page">
+        <div class="cv-head">
+            <div>
+                <h1 class="cv-name">Hugo Luca Tigane</h1>
+                <p class="cv-role" id="cv_role"></p>
+                <p class="cv-summary" id="cv_summary"></p>
+            </div>
+            <div class="cv-contact" id="cv_contact"></div>
+        </div>
+
+        <main class="cv-main">
+            <section class="cv-section">
+                <h2 id="cv_projects_title"></h2>
+                <div id="cv_projects"></div>
+            </section>
+            <section class="cv-section">
+                <h2 id="cv_experience_title"></h2>
+                <div id="cv_experience"></div>
+            </section>
+            <section class="cv-section">
+                <h2 id="cv_education_title"></h2>
+                <div id="cv_education"></div>
+            </section>
+        </main>
+
+        <aside class="cv-sidebar">
+            <section class="cv-section">
+                <h2 id="cv_skills_title"></h2>
+                <ul class="cv-chip-list" id="cv_skills"></ul>
+            </section>
+            <section class="cv-section">
+                <h2 id="cv_strengths_title"></h2>
+                <ul class="cv-list" id="cv_strengths"></ul>
+            </section>
+            <section class="cv-section">
+                <h2 id="cv_languages_title"></h2>
+                <ul class="cv-list" id="cv_languages"></ul>
+            </section>
+        </aside>
+    </article>
+</section>
+
 <script>
+    let currentLanguage = 'est';
+
     function copyEmail() {
         const emailEl = document.getElementById('email');
         const tooltip = document.getElementById('tooltip');
-        const email = emailEl.textContent;
+        const email = emailEl.textContent.trim();
 
         navigator.clipboard.writeText(email).then(() => {
             tooltip.classList.add('show');
@@ -327,48 +645,320 @@
             place2_text: "Administrator",
             place2_time: "March 2023 – August 2023",
             place3_title: "Tallinn University",
-            place3_text: "Computer Science student with a focus on software development. Currently expected to graduate in Summer 2026. Current GPA: 4.808/5.",
+            place3_text: "Computer Science student with a focus on software development. Current GPA: 4.808/5.",
             place3_time: "September 2023 – present",
+            place4_title: "Helikon Medikal OÜ",
+            place4_text: "Software developer",
+            place4_time: "January 2026 – March 2026",
             proj: "Projects & GitHub",
             proj1_title: "Cinema Application",
             proj1_desc: "An application that displays movies currently showing in Estonian cinemas.",
             proj2_title: "Mitigate Online",
             proj2_desc: "A serious game designed to develop students' decision-making skills. I served as the project lead.",
-            proj3_title: "GitHub",
-            proj3_desc: "My GitHub profile, where you can find other smaller public projects.",
+            proj3_title: "Pilditugi",
+            proj3_desc: "Healthcare platform for medical imaging study ordering and Pildipank/PACS interoperability.",
+            uni_github_title: "GitHub",
+            uni_github_desc: "My GitHub profile, where you can find other smaller public projects.",
             contact_text: "Contact: ",
-            tooltip: "Copied email"
+            tooltip: "Copied email",
+            cv_button: "CV (pdf)"
         },
         est: {
             tagline: "Kolmanda aasta informaatika tudeng Tallinna Ülikoolis.",
             history: "Kogemus ja haridus",
             place1_title: "Pelgulinna Gümnaasium",
             place1_text: "Pragmaatilise suunaga õppekava",
-            place1_time: "2010. September – 2022. Juuni",
+            place1_time: "2010. september – 2022. juuni",
             place2_title: "Meriton Old Town Garden Hotel",
             place2_text: "Administraator",
             place2_time: "2023. märts – 2023. august",
             place3_title: "Tallinna Ülikool",
-            place3_text: "Informaatika tudeng tarkvaraarenduse suunaga. Plaanin lõpetada 2026. suvel. Hetke keskmine kaalutud hinne: 4,808/5.",
-            place3_time: "2023. September – praegu",
+            place3_text: "Informaatika tudeng tarkvaraarenduse suunaga. Hetke keskmine kaalutud hinne: 4,808/5.",
+            place3_time: "2023. september – praegu",
+            place4_title: "Helikon Medikal OÜ",
+            place4_text: "Tarkvara arendaja",
+            place4_time: "2026. jaanuar – 2026. märts",
             proj: "Projektid ja GitHub",
             proj1_title: "Kino rakendus",
             proj1_desc: "Rakendus, millega saab näha Eestis kinodes linastuvaid filme.",
             proj2_title: "Mitigate Online",
             proj2_desc: "Õpimäng, mille eesmärk on arendada õpilaste otsustusoskust. Olin projektijuht.",
-            proj3_title: "GitHub",
-            proj3_desc: "Minu GitHub, kus on näha ka teised väiksemad avalikud projektid.",
+            proj3_title: "Pilditugi",
+            proj3_desc: "Tervishoiuplatvorm meditsiiniliste uuringute tellimiseks ning liidestumiseks Eesti tervishoiutaristu teenustega.",
+            uni_github_title: "GitHub",
+            uni_github_desc: "Minu GitHub, kus on näha ka teised väiksemad avalikud projektid.",
             contact_text: "Kontakt: ",
-            tooltip: "Email kopeeritud"
+            tooltip: "Email kopeeritud",
+            cv_button: "CV (pdf)"
         }
 
     };
 
-    function setLanguage(lang) {
-        for (const id in translations[lang]) {
-            document.getElementById(id).innerHTML = translations[lang][id];
+    const cvContent = {
+        en: {
+            role: "Computer Science Student & Software Developer",
+            summary: "Third-year Computer Science student at Tallinn University focused on software development, practical web applications, and clear product thinking. Comfortable leading small projects, learning quickly, and turning ambiguous requirements into working software.",
+            contact: [
+                "hugolucatigane@gmail.com",
+                "github.com/HugoLucaT",
+                "Tallinn, Estonia"
+            ],
+            sections: {
+                projects: "Selected Projects",
+                experience: "Experience",
+                education: "Education",
+                skills: "Web Stack",
+                strengths: "Additional Experience",
+                languages: "Languages"
+            },
+            projects: [
+                {
+                    title: "Cinema Application",
+                    subtitle: "Web app for Estonian cinema listings",
+                    time: "Backend developer",
+                    text: "Built an application that displays movies currently showing in Estonian cinemas, with a clean browsing flow for finding current screenings."
+                },
+                {
+                    title: "Mitigate Online",
+                    subtitle: "Serious educational game",
+                    time: "Project Lead",
+                    text: "Led work on a decision-making learning game, coordinating the project direction and helping shape a usable student-facing experience."
+                },
+                {
+                    title: "Pilditugi",
+                    subtitle: "Healthcare platform for medical imaging study ordering and Pildipank/PACS interoperability",
+                    time: "Backend developer",
+                    text: "Built backend features for a healthcare imaging platform, including DICOM conversion for uploaded PDFs/images, PACS/Pildipank C-STORE delivery, HL7 order integration over MLLP, X-Road SOAP client groundwork, audit logging, and admin-facing role management UI."
+                }
+            ],
+            experience: [
+                {
+                    title: "Helikon Medikal OÜ",
+                    subtitle: "Software Developer",
+                    time: "January 2026 - March 2026",
+                    text: "Contributed backend development on the Pilditugi healthcare imaging platform."
+                },
+                {
+                    title: "Meriton Old Town Garden Hotel",
+                    subtitle: "Administrator",
+                    time: "Mar 2023 - Aug 2023",
+                    text: "Handled front-desk operations, guest communication, reservations, and daily problem solving in a fast-paced service environment."
+                }
+            ],
+            education: [
+                {
+                    title: "Tallinn University",
+                    subtitle: "Computer Science",
+                    time: "Sep 2023 - Present",
+                    text: "Focused on software development. Current GPA: 4.808/5."
+                },
+                {
+                    title: "Pelgulinna Gümnaasium",
+                    subtitle: "Pragmatic curriculum",
+                    time: "Sep 2010 - Jun 2022",
+                    text: "Completed secondary education with a practical, problem-solving oriented study path."
+                }
+            ],
+            skills: [
+                "TypeScript",
+                "JavaScript",
+                "React",
+                "Next.js",
+                "Node.js",
+                "Supabase",
+                "Tailwind CSS"
+            ],
+            strengths: [
+                "Express, MySQL and EJS web applications",
+                "Jest and React Testing Library",
+                "C++ / Arduino and IoT coursework",
+                "DICOM, PACS, HL7 and X-Road integrations"
+            ],
+            languages: [
+                "Estonian",
+                "English"
+            ]
+        },
+        est: {
+            role: "Informaatika tudeng ja tarkvaraarendaja",
+            summary: "Kolmanda aasta informaatika tudeng Tallinna Ülikoolis, kelle fookus on tarkvaraarendusel, praktilistel veebirakendustel ja selgel tootemõtlemisel. Oskan juhtida väiksemaid projekte, kiiresti õppida ja ebamäärased vajadused töötavaks lahenduseks muuta.",
+            contact: [
+                "hugolucatigane@gmail.com",
+                "github.com/HugoLucaT",
+                "Tallinn, Eesti"
+            ],
+            sections: {
+                projects: "Valitud projektid",
+                experience: "Töökogemus",
+                education: "Haridus",
+                skills: "Veebitehnoloogiad",
+                strengths: "Muu tehniline kogemus",
+                languages: "Keeled"
+            },
+            projects: [
+                {
+                    title: "Kino rakendus",
+                    subtitle: "Veebirakendus Eesti kinokavade jaoks",
+                    time: "2025",
+                    text: "Ehitasin rakenduse, mis kuvab Eesti kinodes linastuvaid filme ja aitab kasutajal kiiresti leida aktuaalseid seansse."
+                },
+                {
+                    title: "Mitigate Online",
+                    subtitle: "Tõsimäng hariduslikuks kasutuseks",
+                    time: "Projektijuht",
+                    text: "Juhtisin otsustusoskust arendava õpimängu tööd, aitasin paika panna projektisuunda ja kujundada õpilastele kasutatavat kogemust."
+                },
+                {
+                    title: "Pilditugi",
+                    subtitle: "Tervishoiuplatvorm meditsiiniliste uuringute tellimiseks ning liidestumiseks Eesti tervishoiutaristu teenustega.",
+                    time: "Taustarakenduse arendaja",
+                    text: "Arendasin tervishoiu pildihaldusplatvormi taustarakenduse funktsioone: PDF-ide ja piltide DICOM-konverteerimist, PACS/Pildipank C-STORE edastust, HL7 tellimuste liidestust MLLP kaudu, X-Road SOAP kliendi alust, auditilogisid ning admin-liidese rollihalduse vaateid."
+                }
+            ],
+            experience: [
+                {
+                    title: "Helikon Medikal OÜ",
+                    subtitle: "Tarkvara arendaja",
+                    time: "jaanuar 2026 - märts 2026",
+                    text: "Arendasin Pilditugi tervishoiu pildihaldusplatvormi taustarakendust."
+                },
+                {
+                    title: "Meriton Old Town Garden Hotel",
+                    subtitle: "Administraator",
+                    time: "märts 2023 - august 2023",
+                    text: "Tegelesin vastuvõtu töö, külalissuhtluse, broneeringute ja igapäevase probleemide lahendamisega tempokas teeninduskeskkonnas."
+                }
+            ],
+            education: [
+                {
+                    title: "Tallinna Ülikool",
+                    subtitle: "Informaatika",
+                    time: "september 2023 - praegu",
+                    text: "Fookus tarkvaraarendusel. Hetke keskmine hinne: 4,808/5."
+                },
+                {
+                    title: "Pelgulinna Gümnaasium",
+                    subtitle: "Pragmaatiline õppekava",
+                    time: "september 2010 - juuni 2022",
+                    text: "Omandasin keskhariduse praktilise ja probleemilahendusele suunatud õpiteega."
+                }
+            ],
+            skills: [
+                "TypeScript",
+                "JavaScript",
+                "React",
+                "Next.js",
+                "Node.js",
+                "Supabase",
+                "Tailwind CSS"
+            ],
+            strengths: [
+                "Expressi, MySQL-i ja EJS-iga veebirakendused",
+                "Jest ja React Testing Library",
+                "C++ / Arduino ja IoT õppeprojektid",
+                "DICOM-, PACS-, HL7- ja X-Road-liidestused"
+            ],
+            languages: [
+                "Eesti keel",
+                "Inglise keel"
+            ]
+        }
+    };
+
+    function setText(id, value) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = value;
         }
     }
+
+    function createTextElement(tag, className, text) {
+        const element = document.createElement(tag);
+        element.className = className;
+        element.textContent = text;
+        return element;
+    }
+
+    function renderCvItems(containerId, items) {
+        const container = document.getElementById(containerId);
+        container.replaceChildren();
+
+        items.forEach(item => {
+            const entry = document.createElement('div');
+            entry.className = 'cv-item';
+
+            const head = document.createElement('div');
+            head.className = 'cv-item-head';
+            head.append(
+                createTextElement('div', 'cv-item-title', item.title),
+                createTextElement('div', 'cv-item-time', item.time)
+            );
+
+            entry.append(
+                head,
+                createTextElement('div', 'cv-item-subtitle', item.subtitle),
+                createTextElement('p', 'cv-item-text', item.text)
+            );
+
+            container.appendChild(entry);
+        });
+    }
+
+    function renderCvList(containerId, items) {
+        const container = document.getElementById(containerId);
+        container.replaceChildren();
+
+        items.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item;
+            container.appendChild(listItem);
+        });
+    }
+
+    function renderCv(lang) {
+        const content = cvContent[lang] || cvContent.en;
+
+        setText('cv_role', content.role);
+        setText('cv_summary', content.summary);
+        setText('cv_projects_title', content.sections.projects);
+        setText('cv_experience_title', content.sections.experience);
+        setText('cv_education_title', content.sections.education);
+        setText('cv_skills_title', content.sections.skills);
+        setText('cv_strengths_title', content.sections.strengths);
+        setText('cv_languages_title', content.sections.languages);
+
+        const contact = document.getElementById('cv_contact');
+        contact.replaceChildren();
+        content.contact.forEach(item => {
+            contact.appendChild(createTextElement('span', '', item));
+        });
+
+        renderCvItems('cv_projects', content.projects);
+        renderCvItems('cv_experience', content.experience);
+        renderCvItems('cv_education', content.education);
+        renderCvList('cv_skills', content.skills);
+        renderCvList('cv_strengths', content.strengths);
+        renderCvList('cv_languages', content.languages);
+    }
+
+    function downloadCv() {
+        renderCv(currentLanguage);
+        document.getElementById('cv_button_action').blur();
+        requestAnimationFrame(() => window.print());
+    }
+
+    function setLanguage(lang) {
+        currentLanguage = lang;
+        document.documentElement.lang = lang === 'est' ? 'et' : 'en';
+
+        for (const id in translations[lang]) {
+            setText(id, translations[lang][id]);
+        }
+
+        renderCv(lang);
+    }
+
+    window.addEventListener('beforeprint', () => renderCv(currentLanguage));
 
     setLanguage('est');
 </script>
