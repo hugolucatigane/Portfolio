@@ -326,6 +326,11 @@
             white-space: nowrap;
         }
 
+        .cv-contact a {
+            color: inherit;
+            text-decoration: none;
+        }
+
         .cv-main,
         .cv-sidebar {
             min-width: 0;
@@ -700,7 +705,8 @@
             summary: "Third-year Computer Science student at Tallinn University focused on software development, practical web applications, and clear product thinking. Comfortable leading small projects, learning quickly, and turning ambiguous requirements into working software.",
             contact: [
                 "hugolucatigane@gmail.com",
-                "github.com/HugoLucaT",
+                { label: "github.com/HugoLucaT", url: "https://github.com/HugoLucaT" },
+                { label: "hugolucatigane.github.io/Portfolio", url: "https://hugolucatigane.github.io/Portfolio/" },
                 "Tallinn, Estonia"
             ],
             sections: {
@@ -787,7 +793,8 @@
             summary: "Kolmanda aasta informaatika tudeng Tallinna Ülikoolis, kelle fookus on tarkvaraarendusel, praktilistel veebirakendustel ja selgel tootemõtlemisel. Oskan juhtida väiksemaid projekte, kiiresti õppida ja ebamäärased vajadused töötavaks lahenduseks muuta.",
             contact: [
                 "hugolucatigane@gmail.com",
-                "github.com/HugoLucaT",
+                { label: "github.com/HugoLucaT", url: "https://github.com/HugoLucaT" },
+                { label: "hugolucatigane.github.io/Portfolio", url: "https://hugolucatigane.github.io/Portfolio/" },
                 "Tallinn, Eesti"
             ],
             sections: {
@@ -936,7 +943,16 @@
         const contact = document.getElementById('cv_contact');
         contact.replaceChildren();
         content.contact.forEach(item => {
-            contact.appendChild(createTextElement('span', '', item));
+            if (typeof item === 'string') {
+                contact.appendChild(createTextElement('span', '', item));
+                return;
+            }
+
+            const link = createTextElement('a', '', item.label);
+            link.href = item.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            contact.appendChild(link);
         });
 
         renderCvItems('cv_projects', content.projects);
